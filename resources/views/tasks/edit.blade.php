@@ -16,6 +16,9 @@
       {{ method_field('patch')}}
   <div class="form-group">
     <input type="text" name="title"class="form-control" value="{{ $task->title }}" style="max-width:1000px;">
+    <p>ステータス</p>
+    <label><input type="radio" name="state" value="完了" class="form-control" style="max-width:1000px;">完了</label><br>
+    <label><input type="radio" name="state" value="未了" class="form-control" style="max-width:1000px;">未了</label>
   </div>
   <button type="submit" class="btn btn-primary">更新</button>
 </form>

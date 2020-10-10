@@ -14,8 +14,8 @@ class TasksController extends Controller
      */
     public function index()
     {
+
         $tasks = Task::all();
-        $test = "testです";
         return view('tasks.index', compact('tasks'));
     }
 
@@ -39,6 +39,7 @@ class TasksController extends Controller
     {
         $task = new Task();
         $task->title = $request->title;
+        $task->state = $request->state;
         $task->save();
         return redirect('/');
     }
@@ -75,6 +76,7 @@ class TasksController extends Controller
     public function update(Request $request, Task $task)
     {
         $task->title = $request->title;
+        $task->state = $request->state;
       $task->save();
       return redirect('/');
     }

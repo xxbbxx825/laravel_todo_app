@@ -12,7 +12,11 @@
     <form action='{{ url('/tasks')}}' method="post">
       {{csrf_field()}}
   <div class="form-group">
-    <input type="text" name="title"class="form-control" style="max-width:1000px;">
+    <input type="text" name="title" class="form-control" style="max-width:1000px;">
+    <p>ステータス</p>
+    <label><input type="radio" name="state" value="完了" class="form-control" style="max-width:1000px;">完了</label><br>
+    <label><input type="radio" name="state" value="未了" class="form-control" style="max-width:1000px;">未了</label>
+
   </div>
   <button type="submit" class="btn btn-primary">追加</button>  </form>
 
@@ -21,12 +25,14 @@
   <tbody>
       <tr>
           <td></td>
+          <td>完了ステータス</td>
           <td>作成日</td>
           <td>更新日</td>
       </tr>
     @foreach ($tasks as $task)
     <tr>
       <td>{{$task->title}}</td>
+      <td>{{$task->state}}</td>
       <td>{{$task->created_at->format('Y年m月d日') }}</td>
       <td>{{$task->updated_at->format('Y年m月d日') }}</td>
       <td><form action="{{ action('App\Http\Controllers\TasksController@edit', $task) }}" method="post">

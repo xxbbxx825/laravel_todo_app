@@ -19,6 +19,7 @@ class TasksTableSeeder extends Seeder
       foreach ($tasks as $task) {
         DB::table('tasks')->insert([
           'title' => $task,
+          'state' => '未了',
           'created_at' => new \DateTime(),
           'updated_at' => new \DateTime()
         ]);
