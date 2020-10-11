@@ -16,18 +16,13 @@ class TasksController extends Controller
     {
 
         $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
+        // return view('tasks.index', compact('tasks'));
+        return response()->json([
+            'message' => 'ok',
+            'data' => $tasks
+        ], 200, [], JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,23 +32,25 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new Task();
-        $task->title = $request->title;
-        $task->state = $request->state;
-        $task->save();
-        return redirect('/');
+        $task = Task::create($request->all());
+        return response()->json([
+            'message' => 'Task created successfully',
+            'data' => $task
+        ], 201, [], JSON_UNESCAPED_UNICODE);
+
+
+
+        // $task = new Task();
+        // $task->title = $request->title;
+        // $task->state = $request->state;
+        // $task->save();
+        // return redirect('/');
+        return response()->json([
+            'message' => 'Task created successfully',
+            'data' => $task
+        ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -63,7 +60,7 @@ class TasksController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit')->with('task',$task);
+        // return view('tasks.edit')->with('task',$task);
     }
 
     /**
@@ -77,8 +74,17 @@ class TasksController extends Controller
     {
         $task->title = $request->title;
         $task->state = $request->state;
-      $task->save();
-      return redirect('/');
+        $task->save();
+        // return redirect('/');
+        if ($task) {
+            return response()->json([
+                'message' => 'Task updated successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Task not found',
+            ], 404);
+        }
     }
 
     /**
@@ -90,6 +96,9 @@ class TasksController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect('/');
+        // return redirect('/');
+        return response()->json([
+            'message' => 'Task deleted successfully',
+        ], 200);
     }
 }
