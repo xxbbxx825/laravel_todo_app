@@ -36,11 +36,11 @@ class TasksController extends Controller
         $task->title = $request->title;
         $task->state = $request->state;
         $task->save();
-        return redirect('/');
-        // return response()->json([
-        //     'message' => 'Task created successfully',
-        //     'data' => $task
-        // ], 201, [], JSON_UNESCAPED_UNICODE);
+        // return redirect('/');
+        return response()->json([
+            'message' => 'Task created successfully',
+            'data' => $task
+        ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -62,21 +62,17 @@ class TasksController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request,Task $task)
     {
         $task->title = $request->title;
         $task->state = $request->state;
         $task->save();
         // return redirect('/');
-        if ($task) {
-            return response()->json([
-                'message' => 'Task updated successfully',
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Task not found',
-            ], 404);
-        }
+        return response()->json([
+            'message' => 'Task updated successfully',
+            'data' => $task
+        ], 200);
+
     }
 
     /**
