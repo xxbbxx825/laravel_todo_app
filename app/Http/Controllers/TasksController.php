@@ -14,8 +14,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-
         $tasks = Task::all();
+        // return $tasks;
         // return view('tasks.index', compact('tasks'));
         return response()->json([
             'message' => 'ok',
@@ -32,16 +32,15 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        // $task = Task::create($request->all());
         $task = new Task();
         $task->title = $request->title;
         $task->state = $request->state;
         $task->save();
-        // return redirect('/');
-        return response()->json([
-            'message' => 'Task created successfully',
-            'data' => $task
-        ], 201, [], JSON_UNESCAPED_UNICODE);
+        return redirect('/');
+        // return response()->json([
+        //     'message' => 'Task created successfully',
+        //     'data' => $task
+        // ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
 
