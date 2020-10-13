@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -35,12 +36,24 @@ class TasksController extends Controller
         $task = new Task();
         $task->title = $request->title;
         $task->state = $request->state;
-        $task->save();
+        // $task->save();
         // return redirect('/');
-        return response()->json([
-            'message' => 'Task created successfully',
-            'data' => $task
-        ], 201, [], JSON_UNESCAPED_UNICODE);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'state' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'task not found',
+            ], 404);
+        } else {
+            $task->save();
+            return response()->json([
+                'message' => 'task created successfully',
+                'data' => $task
+            ], 200);
+        }
+
     }
 
 
@@ -66,12 +79,25 @@ class TasksController extends Controller
     {
         $task->title = $request->title;
         $task->state = $request->state;
-        $task->save();
+        // $task->save();
         // return redirect('/');
-        return response()->json([
-            'message' => 'Task updated successfully',
-            'data' => $task
-        ], 200);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'state' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'task not found',
+            ], 404);
+        } else {
+            $task->save();
+            return response()->json([
+                'message' => 'task updated successfully',
+                'data' => $task
+            ], 200);
+        }
+
 
     }
 
