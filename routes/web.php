@@ -17,4 +17,3 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', 'App\Http\Controllers\TasksController@index');
-Route::resource('tasks','App\Http\Controllers\TasksController');

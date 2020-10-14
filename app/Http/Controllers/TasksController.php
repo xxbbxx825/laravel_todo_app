@@ -16,8 +16,6 @@ class TasksController extends Controller
     public function index()
     {
         $tasks = Task::all();
-        // return $tasks;
-        // return view('tasks.index', compact('tasks'));
         return response()->json([
             'message' => 'ok',
             'data' => $tasks
@@ -36,12 +34,12 @@ class TasksController extends Controller
         $task = new Task();
         $task->title = $request->title;
         $task->state = $request->state;
-        // $task->save();
-        // return redirect('/');
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'state' => 'required',
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'task not found',
@@ -53,20 +51,8 @@ class TasksController extends Controller
                 'data' => $task
             ], 200);
         }
-
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
-    {
-        // return view('tasks.edit')->with('task',$task);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -79,13 +65,12 @@ class TasksController extends Controller
     {
         $task->title = $request->title;
         $task->state = $request->state;
-        // $task->save();
-        // return redirect('/');
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'state' => 'required',
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'task not found',
@@ -97,8 +82,6 @@ class TasksController extends Controller
                 'data' => $task
             ], 200);
         }
-
-
     }
 
     /**
@@ -110,7 +93,6 @@ class TasksController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-        // return redirect('/');
         return response()->json([
             'message' => 'Task deleted successfully',
         ], 200);

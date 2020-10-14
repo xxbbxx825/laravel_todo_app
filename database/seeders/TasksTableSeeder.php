@@ -15,7 +15,7 @@ class TasksTableSeeder extends Seeder
     {
       DB::table('tasks')->truncate();
 
-      $tasks = ['ハンドソープを買う','衣替えをする','シャツをクリーニングに出す'];
+      $tasks = ['Laravelでtodo管理アプリを作る','衣替えをする','期日前投票に行く'];
       foreach ($tasks as $task) {
         DB::table('tasks')->insert([
           'title' => $task,
