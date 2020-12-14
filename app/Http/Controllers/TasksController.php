@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Jobs\UpdateTask;
 
 class TasksController extends Controller
 {
@@ -33,11 +34,11 @@ class TasksController extends Controller
     {
         $task = new Task();
         $task->title = $request->title;
-        $task->state = $request->state;
+        $task->status = $request->status;
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'state' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -64,12 +65,16 @@ class TasksController extends Controller
     public function update(Request $request,Task $task)
     {
         $task->title = $request->title;
-        $task->state = $request->state;
+        $task->status = $request->status;
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'state' => 'required',
+            'status' => 'required',
         ]);
+
+        if ($task->status == 1) {
+            UpdateTask::dispatch();
+        }
 
         if ($validator->fails()) {
             return response()->json([
