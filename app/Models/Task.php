@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+
 class Task extends Model implements JWTSubject
 {
     use HasFactory;
@@ -16,6 +17,12 @@ class Task extends Model implements JWTSubject
      *
      * @return mixed
      */
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
