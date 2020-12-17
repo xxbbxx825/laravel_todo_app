@@ -6,6 +6,7 @@ use Validator;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Jobs\UpdateTask;
+use App\Http\Controllers\Auth;
 
 class TasksController extends Controller
 {
@@ -14,6 +15,15 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function __construct(){
+        $this->middleware('jwt.auth')->only('index','store','update', 'destroy');
+        $this->middleware('can:view,task')->only('destroy');
+        $this->middleware('can:update,task')->only('update');
+        $this->middleware('can:delete,task')->only('destroy');
+    }
+
     public function index()
     {
         $tasks = Task::all();
@@ -46,6 +56,7 @@ class TasksController extends Controller
                 'message' => 'task not found',
             ], 404);
         } else {
+            $task->user_id = Auth::id();
             $task->save();
             return response()->json([
                 'message' => 'task created successfully',

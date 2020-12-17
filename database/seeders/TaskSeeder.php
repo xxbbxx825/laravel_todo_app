@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class TasksTableSeeder extends Seeder
+class TaskSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,10 +20,17 @@ class TasksTableSeeder extends Seeder
         DB::table('tasks')->insert([
           'title' => $task,
           'status' => 0,
+          'user_id' => 1,
           'created_at' => new \DateTime(),
           'updated_at' => new \DateTime()
         ]);
-
         }
+        // DB::table('tasks')->insert([
+        //   'title' => 'id51のタスク',
+        //   'status' => 0,
+        //   'user_id' => 51,
+        //   'created_at' => new \DateTime(),
+        //   'updated_at' => new \DateTime()
+        // ]);
     }
 }
