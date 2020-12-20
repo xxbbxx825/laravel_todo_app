@@ -15,7 +15,35 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
+
+
+    // public function register(Request $request) {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:100',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8|max:255|confirmed',
+    //         'password_confirmation' => 'required|string|min:8|max:255',
+    //     ]);
+
+    //     if($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'messages' => $validator->messages()
+    //         ], 200);
+    //     }
+
+    //     $user = new User;
+    //     $user->fill($request->all());
+    //     $user->password = bcrypt($request->password);
+    //     $user->save();
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'data' => $user
+    //     ], 200);
+    // }
 
     /**
      * Get a JWT via given credentials.

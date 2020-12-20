@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Jobs\UpdateTask;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
@@ -24,13 +25,16 @@ class TasksController extends Controller
         $this->middleware('can:delete,task')->only('destroy');
     }
 
-    public function index()
+    public function indexAll()
     {
         $tasks = Task::all();
-        return response()->json([
-            'message' => 'ok',
-            'data' => $tasks
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        return $tasks;
+    }
+
+    public function index (){
+        $user = Auth::user();
+        $tasks = Task::where('user_id', $user->id)->get();
+        return $tasks;
     }
 
 
@@ -58,10 +62,7 @@ class TasksController extends Controller
         } else {
             $task->user_id = Auth::id();
             $task->save();
-            return response()->json([
-                'message' => 'task created successfully',
-                'data' => $task
-            ], 200);
+            return $task;
         }
     }
 
@@ -93,10 +94,7 @@ class TasksController extends Controller
             ], 404);
         } else {
             $task->save();
-            return response()->json([
-                'message' => 'task updated successfully',
-                'data' => $task
-            ], 200);
+            return $task;
         }
     }
 
