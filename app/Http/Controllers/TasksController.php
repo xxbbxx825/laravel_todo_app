@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Task;
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Jobs\UpdateTask;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
