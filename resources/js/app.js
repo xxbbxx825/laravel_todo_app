@@ -1,19 +1,17 @@
+require('./bootstrap');
+
 import Vue from 'vue';
+import store from './store';
 import VueRouter from 'vue-router';
 import HeaderComponent from "./components/HeaderComponent";
 import TaskListComponent from "./components/TaskListComponent";
 import TaskCreateComponent from "./components/TaskCreateComponent";
 import TaskEditComponent from "./components/TaskEditComponent";
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require('./bootstrap');
+import LoginComponent from "./components/LoginComponent";
+import UserComponent from "./components/UserComponent";
 
 window.Vue = require('vue');
+window.state = store.state;
 
 Vue.use(VueRouter);
 
@@ -21,7 +19,18 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/tasks',
+            path: '/login',
+            name: 'login',
+            component: LoginComponent
+        },
+        {
+            path: '/user',
+            name: 'user',
+            component: UserComponent,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/',
             name: 'task.list',
             component: TaskListComponent
         },
@@ -38,6 +47,22 @@ const router = new VueRouter({
         },
     ]
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (state.isLogin === false) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else {
+        next();
+    }
+});
+
 
 
 

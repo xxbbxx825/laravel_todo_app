@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     getTasks() {
-      axios.get("/api/tasks").then((res) => {
+      axios.get("/api/mytasks").then((res) => {
         this.tasks = res.data;
       });
     },
