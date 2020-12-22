@@ -21,16 +21,10 @@ class TaskSeeder extends Seeder
           'title' => $task,
           'status' => 0,
           'user_id' => 1,
+          'due' => now(),
           'created_at' => new \DateTime(),
           'updated_at' => new \DateTime()
         ]);
         }
-        // DB::table('tasks')->insert([
-        //   'title' => 'id51のタスク',
-        //   'status' => 0,
-        //   'user_id' => 51,
-        //   'created_at' => new \DateTime(),
-        //   'updated_at' => new \DateTime()
-        // ]);
     }
 }
