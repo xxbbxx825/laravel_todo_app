@@ -29,6 +29,6 @@ class NoticeCompleteTask extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com')->view('email');
+        return $this->from('example@example.com')->view('email.notice_update');
     }
 }
