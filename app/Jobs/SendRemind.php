@@ -35,7 +35,9 @@ class SendRemind implements ShouldQueue
     {
         $tasks = Task::all();
         foreach ($tasks as $task) {
+            if ($task->status === 0) {
             Mail::to($task->user->email)->send(new SendTaskRemind($task));
+            }
         }
     }
 }
