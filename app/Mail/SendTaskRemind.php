@@ -50,29 +50,5 @@ class SendTaskRemind extends Mailable
                         'nearDueTask' => $nearDueTask
                     ]);
         }
-
-
-        // $today = strtotime(new Carbon('today'));
-        // $tomorrow = strtotime(new Carbon('tomorrow'));
-        // $tasks = Task::all();
-        // foreach ($tasks as $task) {
-        //     $deadLine = strtotime($task->due);
-        //     if ($deadLine - $today < 0) {
-        //         $overDueTask = $task;
-        //         return $this->view('email.send_task_remind')
-        //                     ->from('example@example.com')
-        //                     ->with([
-        //                         'overDueTask' => $overDueTask
-        //                     ]);
-        //     }
-        //     elseif ($tomorrow - $deadLine < 24*60*60) {
-        //         $nearDueTask = $task;
-        //         return $this->view('email.send_task_remind')
-        //                     ->from('example@example.com')
-        //                     ->with([
-        //                         'nearDueTask' => $nearDueTask
-        //                     ]);
-        //     }
-        // }
     }
 }
