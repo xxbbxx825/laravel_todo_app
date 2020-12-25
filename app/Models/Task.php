@@ -20,7 +20,7 @@ class Task extends Model implements JWTSubject
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function getJWTIdentifier()
