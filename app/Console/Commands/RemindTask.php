@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Carbon\Carbon;
-use App\Models\Task;
-use App\Jobs\SendRemind;
 
+use App\Models\Task;
+use App\Jobs\MailOverDueTask;
+use App\Jobs\MailNearDueTask;
 
 class RemindTask extends Command
 {
@@ -41,6 +41,18 @@ class RemindTask extends Command
      */
     public function handle()
     {
-        SendRemind::dispatch();
+        $overDueTasks = Task::getOverDueTask();
+        $nearDueTasks = Task::getNearDueTask();
+        // var_dump($overDueTasks);
+        if (isset($overDueTasks)) {
+            foreach ($overDueTasks as $overDueTask) {
+                MailOverDueTask::dispatch($overDueTask);
+            }
+        }
+        if (isset($nearDueTasks)) {
+            foreach ($nearDueTasks as $nearDueTask) {
+                MailNearDueTask::dispatch($nearDueTask);
+            }
+        }
     }
 }
