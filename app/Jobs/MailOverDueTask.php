@@ -9,21 +9,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendTaskRemind;
-use App\Models\Task;
+use App\Mail\SendOverDueTaskRemind;
 
-class SendRemind implements ShouldQueue
+class MailOverDueTask implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    protected $overDueTask;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($overDueTask)
     {
-
+        $this->overDueTask = $overDueTask;
     }
 
     /**
@@ -33,11 +32,7 @@ class SendRemind implements ShouldQueue
      */
     public function handle()
     {
-        $tasks = Task::all();
-        foreach ($tasks as $task) {
-            if ($task->status === 0) {
-            Mail::to($task->user->email)->send(new SendTaskRemind($task));
-            }
-        }
+        $overDueTask = $this->overDueTask;
+        Mail::to($this->overDueTask['email'])->send(new SendOverDueTaskRemind($overDueTask));
     }
 }
