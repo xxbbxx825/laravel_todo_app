@@ -19,7 +19,6 @@ class TasksController extends Controller
 
     public function __construct(){
         $this->middleware('jwt.auth')->only('index','store','update', 'destroy');
-        $this->middleware('can:view,task')->only('destroy');
         $this->middleware('can:update,task')->only('update');
         $this->middleware('can:delete,task')->only('destroy');
     }
