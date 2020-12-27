@@ -6,6 +6,7 @@
           <th scope="col">#</th>
           <th scope="col">Title</th>
           <th scope="col">Status</th>
+          <th scope="col">Due</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -15,6 +16,7 @@
           <th scope="row">{{ task.id }}</th>
           <td>{{ task.title }}</td>
           <td>{{ task.status }}</td>
+          <td>{{ task.due }}</td>
 
           <!-- <td>
             <router-link

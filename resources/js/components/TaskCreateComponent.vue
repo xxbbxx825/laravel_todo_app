@@ -11,6 +11,10 @@
             <label for="status" class="col-sm-3 col-form-label">Status</label>
             <input type="text" class="col-sm-9 form-control" id="status" v-model="task.status">
           </div>
+          <div class="form-group row">
+            <label for="due" class="col-sm-3 col-form-label">Due</label>
+            <input type="" class="col-sm-9 form-control" id="due" v-model="task.due">
+          </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
