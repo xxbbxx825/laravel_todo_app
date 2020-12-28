@@ -9,20 +9,19 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NoticeCompleteTask;
-use App\Models\Task;
 
 class UpdateTask implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    protected $task;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($task)
     {
-
+        $this->task = $task;
     }
 
     /**
@@ -32,6 +31,7 @@ class UpdateTask implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to('h.shimokawa@flag-pictures.co.jp')->send(new NoticeCompleteTask);
+        $task = $this->task;
+        Mail::to($task->user->email)->send(new NoticeCompleteTask($task));
     }
 }

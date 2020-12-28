@@ -64,7 +64,6 @@ class TasksController extends Controller
         }
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -83,7 +82,7 @@ class TasksController extends Controller
         ]);
 
         if ($task->status == 1) {
-            UpdateTask::dispatch();
+            UpdateTask::dispatch($task);
         }
 
         if ($validator->fails()) {
