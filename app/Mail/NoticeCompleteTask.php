@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class NoticeCompleteTask extends Mailable
 {
     use Queueable, SerializesModels;
-
+    protected $task;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($task)
     {
-        //
+        $this->task = $task;
     }
 
     /**
@@ -29,6 +28,10 @@ class NoticeCompleteTask extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com')->view('email.notice_update');
+        return $this->view('email.notice_update')
+                    ->from('example@example.com')
+                    ->with([
+                        'task' => $this->task
+                    ]);
     }
 }
