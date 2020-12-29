@@ -19,6 +19,7 @@ class TasksController extends Controller
 
     public function __construct(){
         $this->middleware('jwt.auth')->only('index','store','update', 'destroy');
+        $this->middleware('can:show,task')->only('view');
         $this->middleware('can:update,task')->only('update');
         $this->middleware('can:delete,task')->only('destroy');
     }
@@ -33,6 +34,11 @@ class TasksController extends Controller
         $user = Auth::user();
         $tasks = Task::where('user_id', $user->id)->get();
         return $tasks;
+    }
+
+    public function show(Task $task) {
+        $task = Task::where('id', $task->id)->get();
+        return $task;
     }
 
 

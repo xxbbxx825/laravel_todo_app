@@ -7,6 +7,7 @@
           <th scope="col">Title</th>
           <th scope="col">Status</th>
           <th scope="col">Due</th>
+          <th scope="col">Show</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -18,13 +19,13 @@
           <td>{{ task.status }}</td>
           <td>{{ task.due }}</td>
 
-          <!-- <td>
+          <td>
             <router-link
               v-bind:to="{ name: 'task.show', params: { taskId: task.id } }"
             >
               <button class="btn btn-primary">Show</button>
             </router-link>
-          </td> -->
+          </td>
           <td>
             <router-link
               v-bind:to="{ name: 'task.edit', params: { taskId: task.id } }"
