@@ -56,7 +56,7 @@ export default {
       deleteTask(id) {
         axios.delete('/api/tasks/' + id)
             .then((res) => {
-                this.getTask();
+                this.$router.push({name: 'task.list'})
             });
     }
   },
