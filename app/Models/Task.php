@@ -24,6 +24,11 @@ class Task extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function subTasks()
+    {
+        return $this->hasMany('App\Models\SubTask');
+    }
+
     public static function getOverDueTask () {
         $tasks = Task::all();
         $today = strtotime(new Carbon('today'));
