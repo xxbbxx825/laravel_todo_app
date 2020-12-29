@@ -8,6 +8,7 @@ import LoginComponent from "./components/LoginComponent";
 import TaskCreateComponent from "./components/TaskCreateComponent";
 import TaskEditComponent from "./components/TaskEditComponent";
 import TaskListComponent from "./components/TaskListComponent";
+import TaskShowComponent from "./components/TaskShowComponent";
 import UserComponent from "./components/UserComponent";
 
 window.Vue = require('vue');
@@ -48,6 +49,13 @@ const router = new VueRouter({
             meta: { requiresAuth: true },
             props: true
         },
+        {
+            path: '/tasks/:taskId',
+            name: 'task.show',
+            component: TaskShowComponent,
+            meta: { requiresAuth: true },
+            props: true
+        }
     ]
 });
 
