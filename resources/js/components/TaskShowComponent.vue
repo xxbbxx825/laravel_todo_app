@@ -11,7 +11,7 @@
           <th scope="col">Delete</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="task[0]">
         <tr>
           <th scope="row">{{ task[0].id }}</th>
           <td>{{ task[0].title }}</td>
