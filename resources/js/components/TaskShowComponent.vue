@@ -11,6 +11,7 @@
           <th scope="col">Delete</th>
         </tr>
       </thead>
+
       <tbody v-if="task[0]">
         <tr>
           <th scope="row">{{ task[0].id }}</th>
@@ -29,6 +30,21 @@
           </td>
         </tr>
       </tbody>
+
+      <tbody v-if="sub_tasks">
+        <tr v-for="sub_task in sub_tasks" :key="sub_task.id">
+          <th scope="row">{{ sub_task.id }}</th>
+          <td>{{ sub_task.title }}</td>
+          <td>{{ sub_task.status }}</td>
+          <td>{{ sub_task.due }}</td>
+          <td>
+              <button class="btn btn-success">Edit</button>
+          </td>
+          <td>
+            <p>削除ボタン</p>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -43,7 +59,8 @@ export default {
   },
   data: function () {
       return {
-          task: {}
+          task: {},
+          sub_tasks: {}
       }
   },
   methods: {
@@ -51,6 +68,12 @@ export default {
           axios.get('/api/tasks/' + this.taskId)
               .then((res) => {
                   this.task = res.data;
+              });
+      },
+      getSubTasks() {
+          axios.get('/api/tasks/' + this.taskId + '/sub_tasks')
+              .then((res) => {
+                  this.sub_tasks = res.data;
               });
       },
       deleteTask(id) {
@@ -61,7 +84,8 @@ export default {
     }
   },
   mounted() {
-      this.getTask();
+      this.getTask(),
+      this.getSubTasks()
   }
 };
 </script>

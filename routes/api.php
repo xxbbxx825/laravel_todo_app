@@ -19,6 +19,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('mytasks', 'App\Http\Controllers\TasksController@index', function ($user) {
         return $user;
     })->name('tasks.index');
+    Route::get('tasks/{task}/sub_tasks', 'App\Http\Controllers\TasksController@showSubTasks', function ($task) {
+        return $task;
+    })->name('tasks.sub_tasks');
 });
 
 Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');

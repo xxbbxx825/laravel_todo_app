@@ -26,7 +26,7 @@ class Task extends Model
 
     public function subTasks()
     {
-        return $this->hasMany('App\Models\SubTask');
+        return $this->hasMany('App\Models\SubTask', 'task_id', 'id');
     }
 
     public static function getOverDueTask () {
@@ -59,5 +59,10 @@ class Task extends Model
             }
         }
         return $nearDueTask;
+    }
+
+    public static function getSubTasks (Task $task) {
+        $subTasks = $task->sub_tasks;
+        return $subTasks;
     }
 }
