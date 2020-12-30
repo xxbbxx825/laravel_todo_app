@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Task;
+use App\Models\SubTask;
 use App\Jobs\UpdateTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,11 @@ class TasksController extends Controller
     public function show(Task $task) {
         $task = Task::where('id', $task->id)->get();
         return $task;
+    }
+
+    public function showSubTasks(Task $task) {
+        $subTasks = SubTask::where('task_id', $task->id)->get();
+        return $subTasks;
     }
 
 

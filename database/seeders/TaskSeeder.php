@@ -14,7 +14,9 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
+      DB::statement('SET FOREIGN_KEY_CHECKS=0;');
       DB::table('tasks')->truncate();
+      DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
       $tasks1 = ['Laravelでtodo管理アプリを作る','衣替えをする','期日前投票に行く'];
       foreach ($tasks1 as $task) {
