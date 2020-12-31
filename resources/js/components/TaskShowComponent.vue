@@ -40,7 +40,11 @@
           <td>{{ sub_task.status }}</td>
           <td>{{ sub_task.due }}</td>
           <td>
-            <button class="btn btn-success">Edit</button>
+            <router-link
+              v-bind:to="{ name: 'sub_task.edit', params: { taskId: task[0].id, subTaskId: sub_task.id } }"
+            >
+              <button class="btn btn-success">Edit</button>
+            </router-link>
           </td>
           <td>
             <button
