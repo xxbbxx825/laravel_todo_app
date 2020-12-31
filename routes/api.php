@@ -34,12 +34,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::delete('sub_tasks/{sub_task}', 'App\Http\Controllers\SubTasksController@destroy')->name('sub_task.destroy');
 });
 
+
+Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
 Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    // Route::post('register', 'App\Http\Controllers\AuthController@register');
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::get('me', 'App\Http\Controllers\AuthController@me');
