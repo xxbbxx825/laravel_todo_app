@@ -9,6 +9,7 @@ import TaskCreateComponent from "./components/TaskCreateComponent";
 import TaskEditComponent from "./components/TaskEditComponent";
 import TaskListComponent from "./components/TaskListComponent";
 import TaskShowComponent from "./components/TaskShowComponent";
+import SubTaskEditComponent from "./components/SubTaskEditComponent";
 import UserComponent from "./components/UserComponent";
 
 window.Vue = require('vue');
@@ -55,7 +56,14 @@ const router = new VueRouter({
             component: TaskShowComponent,
             meta: { requiresAuth: true },
             props: true
-        }
+        },
+        {
+            path: '/sub_tasks/:subTaskId/edit',
+            name: 'sub_task.edit',
+            component: SubTaskEditComponent,
+            meta: { requiresAuth: true },
+            props: true
+        },
     ]
 });
 

@@ -59,10 +59,12 @@ class TasksController extends Controller
         $task = new Task();
         $task->title = $request->title;
         $task->status = $request->status;
+        $task->due = $request->due;
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required',
+            'due' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -87,10 +89,12 @@ class TasksController extends Controller
     {
         $task->title = $request->title;
         $task->status = $request->status;
+        $task->due = $request->due;
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'status' => 'required',
+            'due' => 'required',
         ]);
 
         if ($task->status == 1) {

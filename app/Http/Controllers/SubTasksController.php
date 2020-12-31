@@ -13,6 +13,11 @@ class SubTasksController extends Controller
         $this->middleware('jwt.auth')->only('store', 'update', 'destroy');
     }
 
+    public function show(SubTask $subTask) {
+        $subTask = SubTask::where('id', $subTask->id)->get();
+        return $subTask;
+    }
+
     public function store(Request $request, Task $task)
     {
         $subTask = new SubTask();
