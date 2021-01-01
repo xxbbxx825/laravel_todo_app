@@ -4,6 +4,7 @@ import Vue from 'vue';
 import store from './store';
 import VueRouter from 'vue-router';
 import HeaderComponent from "./components/HeaderComponent";
+import RegisterComponent from "./components/RegisterComponent";
 import LoginComponent from "./components/LoginComponent";
 import TaskCreateComponent from "./components/TaskCreateComponent";
 import TaskEditComponent from "./components/TaskEditComponent";
@@ -24,6 +25,11 @@ const router = new VueRouter({
             path: '/login',
             name: 'login',
             component: LoginComponent
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterComponent
         },
         {
             path: '/user',

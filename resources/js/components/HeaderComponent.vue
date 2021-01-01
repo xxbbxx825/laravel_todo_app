@@ -13,6 +13,9 @@
             <router-link v-bind:to="{ name: 'user' }">
               <button class="btn btn-success">User</button>
             </router-link>
+            <router-link v-bind:to="{ name: 'register' }">
+              <button class="btn btn-success">register</button>
+            </router-link>
             <router-link v-bind:to="{ name: 'login' }">
               <button class="btn btn-success">Login</button>
             </router-link>
