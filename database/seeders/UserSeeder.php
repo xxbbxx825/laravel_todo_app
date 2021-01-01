@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,17 +18,22 @@ class UserSeeder extends Seeder
 
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        DB::table('users')->insert([
+            'name' => 'foo',
+            'email' => 'foo@example.com',
+            'password' => Hash::make('11111111'),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'bar',
+            'email' => 'bar@example.com',
+            'password' => Hash::make('11111111'),
+        ]);
         User::factory()
-            ->times(50)
+            ->times(5)
             ->create();
-        // DB::table('users')->insert([
-        //     'name' => 'foo',
-        //     'email' => 'foo@example.com',
-        //     'email_verified_at' => now(),
-        //     'password' => '11111111', // password
-        //     'remember_token' => Str::random(10),
-        //     'created_at' => new \DateTime(),
-        //     'updated_at' => new \DateTime()
-        // ]);
     }
 }
