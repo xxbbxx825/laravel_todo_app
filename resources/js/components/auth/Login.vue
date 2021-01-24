@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         login() {
-            axios.post('/api/auth/login', {
+            axios.post('/api/login', {
                 email: this.email,
                 password: this.password
             }).then(res => {

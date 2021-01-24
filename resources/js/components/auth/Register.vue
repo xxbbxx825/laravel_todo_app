@@ -46,7 +46,7 @@ export default {
         password_confirmation: this.password_confirmation,
       });
       axios
-        .post("/api/auth/login", {
+        .post("/api/login", {
           email: this.email,
           password: this.password,
         })
