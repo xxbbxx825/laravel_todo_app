@@ -52,7 +52,7 @@ export default {
   methods: {
     getTasks() {
       axios.get("/api/tasks").then((res) => {
-        this.tasks = res.data;
+        this.tasks = res.data.data;
       });
     },
     deleteTask(id) {

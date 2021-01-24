@@ -78,7 +78,7 @@ export default {
   methods: {
     getTask() {
       axios.get("/api/tasks/" + this.taskId).then((res) => {
-        this.task = res.data;
+        this.task = res.data.data;
       });
     },
     getSubTasks() {

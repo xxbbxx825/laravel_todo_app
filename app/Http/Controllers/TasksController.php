@@ -7,8 +7,10 @@ use App\Models\Task;
 use App\Models\SubTask;
 use App\Jobs\UpdateTask;
 use App\Http\Requests\TasksRequest;
+use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use League\CommonMark\Extension\TaskList\TaskListItemMarkerRenderer;
 
 class TasksController extends Controller
 {
@@ -21,12 +23,12 @@ class TasksController extends Controller
     public function index (){
         $user = Auth::user();
         $tasks = Task::where('user_id', $user->id)->get();
-        return $tasks;
+        return TaskResource::collection($tasks);
     }
 
     public function show(Task $task) {
         $task = Task::where('id', $task->id)->first();
-        return $task;
+        return new TaskResource($task);
     }
 
     public function store(TasksRequest $request)
@@ -38,7 +40,7 @@ class TasksController extends Controller
             'due' => $request->due,
         ]);
 
-        return $task;
+        return new TaskResource($task);
 
     }
 
@@ -50,7 +52,7 @@ class TasksController extends Controller
             UpdateTask::dispatch($task);
         }
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
