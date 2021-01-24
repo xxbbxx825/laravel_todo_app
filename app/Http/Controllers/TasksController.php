@@ -6,29 +6,16 @@ use Validator;
 use App\Models\Task;
 use App\Models\SubTask;
 use App\Jobs\UpdateTask;
+use App\Http\Requests\TasksRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
     public function __construct(){
-        $this->middleware('jwt.auth')->only('index','store','update', 'destroy');
         $this->middleware('can:show,task')->only('view');
         $this->middleware('can:update,task')->only('update');
         $this->middleware('can:delete,task')->only('destroy');
-    }
-
-    public function indexAll()
-    {
-        $tasks = Task::all();
-        return $tasks;
     }
 
     public function index (){
@@ -38,77 +25,32 @@ class TasksController extends Controller
     }
 
     public function show(Task $task) {
-        $task = Task::where('id', $task->id)->get();
+        $task = Task::where('id', $task->id)->first();
         return $task;
     }
 
-    public function showSubTasks(Task $task) {
-        $subTasks = SubTask::where('task_id', $task->id)->get();
-        return $subTasks;
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(TasksRequest $request)
     {
-        $task = new Task();
-        $task->title = $request->title;
-        $task->status = $request->status;
-        $task->due = $request->due;
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'status' => 'required',
-            'due' => 'required',
+        $task = Task::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'status' => $request->status,
+            'due' => $request->due,
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'task not found',
-            ], 404);
-        } else {
-            $task->user_id = Auth::id();
-            $task->save();
-            return $task;
-        }
+        return $task;
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,Task $task)
+    public function update(TasksRequest $request,Task $task)
     {
-        $task->title = $request->title;
-        $task->status = $request->status;
-        $task->due = $request->due;
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'status' => 'required',
-            'due' => 'required',
-        ]);
+        $task->fill($request->all())->save();
 
         if ($task->status == 1) {
             UpdateTask::dispatch($task);
         }
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'task not found',
-            ], 404);
-        } else {
-            $task->save();
-            return $task;
-        }
+        return $task;
     }
 
     /**
@@ -119,9 +61,10 @@ class TasksController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return response()->json([
-            'message' => 'Task deleted successfully',
-        ], 200);
+        if($task->delete()) {
+            return response()->json(true);
+        } else {
+            return response()->json(false, 500);
+        }
     }
 }

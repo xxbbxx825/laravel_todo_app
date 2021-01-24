@@ -14,11 +14,11 @@ class CreateSubTasksTable extends Migration
     public function up()
     {
         Schema::create('sub_tasks', function (Blueprint $table) {
-            $table->bigIncrements('id');;
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('task_id');
             $table->string('title');
             $table->integer('status');
             $table->date('due')->nullable()->default(null);
-            $table->unsignedBigInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->timestamps();
         });

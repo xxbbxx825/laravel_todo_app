@@ -2,64 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Validator;
 use App\Models\Task;
 use App\Models\SubTask;
-use Validator;
+use App\Http\Requests\SubTasksRequest;
+use Illuminate\Http\Request;
 
 class SubTasksController extends Controller
 {
-    public function __construct(){
-        $this->middleware('jwt.auth')->only('store', 'update', 'destroy');
+    public function index(Task $task) {
+        $subTasks = SubTask::where('task_id', $task->id)->get();
+        return $subTasks;
     }
 
     public function show(SubTask $subTask) {
-        $subTask = SubTask::where('id', $subTask->id)->get();
+        $subTask = SubTask::where('id', $subTask->id)->first();
         return $subTask;
     }
 
-    public function store(Request $request, Task $task)
+    public function store(SubTasksRequest $request)
     {
-        $subTask = new SubTask();
-        $subTask->title = $request->title;
-        $subTask->status = $request->status;
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'status' => 'required',
+        $subTask = SubTask::create([
+            'task_id' => $request->task_id,
+            'title' => $request->title,
+            'status' => $request->status,
+            'due' => $request->due,
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'subTask not found',
-            ], 404);
-        } else {
-            $subTask->task_id = $task->id;
-            $subTask->save();
-            return $subTask;
-        }
+        return $subTask;
     }
 
-    public function update(Request $request,SubTask $subTask)
+    public function update(SubTasksRequest $request, SubTask $subTask)
     {
-        $subTask->title = $request->title;
-        $subTask->status = $request->status;
-        $subTask->due = $request->due;
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'status' => 'required',
-            'due' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'error',
-            ], 404);
-        } else {
-            $subTask->save();
-            return $subTask;
-        }
+        $subTask->fill($request->all())->save();
+        return $subTask;
     }
 
     public function destroy(SubTask $subTask)

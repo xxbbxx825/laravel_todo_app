@@ -19,6 +19,13 @@ class Task extends Model
      * @return mixed
      */
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'status',
+        'due',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
