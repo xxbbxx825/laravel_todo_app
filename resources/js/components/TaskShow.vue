@@ -12,21 +12,21 @@
         </tr>
       </thead>
       <span>Main task</span>
-      <tbody v-if="task[0]">
+      <tbody v-if="task">
         <tr>
-          <th scope="row">{{ task[0].id }}</th>
-          <td>{{ task[0].title }}</td>
-          <td>{{ task[0].status }}</td>
-          <td>{{ task[0].due }}</td>
+          <th scope="row"></th>
+          <td>{{ task.title }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.due }}</td>
           <td>
             <router-link
-              v-bind:to="{ name: 'task.edit', params: { taskId: task[0].id } }"
+              :to="{ name: 'task.edit', params: { taskId: task.id } }"
             >
               <button class="btn btn-success">Edit</button>
             </router-link>
           </td>
           <td>
-            <button class="btn btn-danger" v-on:click="deleteTask(task[0].id)">
+            <button class="btn btn-danger" @click="deleteTask(task.id)">
               Delete
             </button>
           </td>
@@ -35,22 +35,19 @@
       <span>Sub task</span>
       <tbody v-if="sub_tasks">
         <tr v-for="sub_task in sub_tasks" :key="sub_task.id">
-          <th scope="row">{{ sub_task.id }}</th>
+          <th scope="row"></th>
           <td>{{ sub_task.title }}</td>
           <td>{{ sub_task.status }}</td>
           <td>{{ sub_task.due }}</td>
           <td>
             <router-link
-              v-bind:to="{ name: 'sub_task.edit', params: { taskId: task[0].id, subTaskId: sub_task.id } }"
+              :to="{ name: 'task.edit', params: { subTaskId: sub_task.id } }"
             >
               <button class="btn btn-success">Edit</button>
             </router-link>
           </td>
           <td>
-            <button
-              class="btn btn-danger"
-              v-on:click="deleteSubTask(sub_task.id)"
-            >
+            <button class="btn btn-danger" @click="deleteSubTask(sub_task.id)">
               Delete
             </button>
           </td>
@@ -61,45 +58,26 @@
 </template>
 
 <script>
+import { taskMethods } from "../mixins/taskMethods";
 export default {
+  mixins: [taskMethods],
   props: {
     taskId: {
       type: Number,
       require: true,
     },
   },
-  data: function () {
+  data() {
     return {
-      task: {},
-      sub_tasks: {},
-      componentKey: 0,
+      task: [],
+      sub_tasks: [],
     };
   },
-  methods: {
-    getTask() {
-      axios.get("/api/tasks/" + this.taskId).then((res) => {
-        this.task = res.data;
-      });
-    },
-    getSubTasks() {
-      axios.get("/api/tasks/" + this.taskId + "/sub_tasks").then((res) => {
-        this.sub_tasks = res.data;
-      });
-    },
-    deleteTask(id) {
-      axios.delete("/api/tasks/" + id).then((res) => {
-        this.$router.push({ name: "task.list" });
-      });
-    },
-    deleteSubTask(subTaskId) {
-      axios.delete("/api/sub_tasks/" + subTaskId).then((res) => {
-        this.getSubTasks()
-      });
-    },
-  },
-  mounted() {
-    this.getTask(),
-    this.getSubTasks();
+  methods: {},
+  created() {
+    console.log(this.taskId);
+    this.getTask(this.taskId);
+    this.getSubTasks(this.taskId);
   },
 };
 </script>

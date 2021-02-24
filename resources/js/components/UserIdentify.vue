@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p v-show="isError">情報の取得に失敗しました。</p>
+    <p>{{ accessToken }}</p>
+    <!-- <p v-show="isError">情報の取得に失敗しました。</p>
     <h1>ユーザー情報</h1>
     <table>
       <tr>
@@ -19,27 +20,29 @@
         <th>登録日</th>
         <td>{{ user.created_at }}</td>
       </tr>
-    </table>
+    </table> -->
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      isError: false,
-      user: {},
-    };
+    return {};
   },
-  created() {
-    axios
-      .get("/api/auth/me")
-      .then((res) => {
-        this.user = res.data;
-      })
-      .catch((error) => {
-        this.isError = true;
-      });
+  computed: {
+    accessToken() {
+      return this.$store.getters.accessToken;
+    },
   },
+  //   created() {
+  //     axios
+  //       .get("/api/auth/me")
+  //       .then((res) => {
+  //         this.user = res.data;
+  //       })
+  //       .catch((error) => {
+  //         this.isError = true;
+  //       });
+  //   },
 };
 </script>

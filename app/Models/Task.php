@@ -11,13 +11,16 @@ class Task extends Model
 {
     use HasFactory;
 
-    // Rest omitted for brevity
+    const STATUS_TO_DO = 0;
+    const STATUS_DOING = 1;
+    const STATUS_DONE = 2;
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
+    protected $fillable = [
+        'user_id',
+        'title',
+        'status',
+        'due',
+    ];
 
     public function user()
     {

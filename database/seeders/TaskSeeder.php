@@ -23,7 +23,7 @@ class TaskSeeder extends Seeder
         DB::table('tasks')->insert([
           'title' => $task,
           'status' => 0,
-          'user_id' => 51,
+          'user_id' => 1,
           'due' => new Carbon('tomorrow'),
           'created_at' => new \DateTime(),
           'updated_at' => new \DateTime()
@@ -34,7 +34,7 @@ class TaskSeeder extends Seeder
         DB::table('tasks')->insert([
           'title' => $task,
           'status' => 0,
-          'user_id' => 52,
+          'user_id' => 2,
           'due' => new Carbon('2020-12-20'),
           'created_at' => new \DateTime(),
           'updated_at' => new \DateTime()
