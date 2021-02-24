@@ -20,13 +20,13 @@
           <td>{{ task.due }}</td>
           <td>
             <router-link
-              v-bind:to="{ name: 'task.edit', params: { taskId: task.id } }"
+              :to="{ name: 'task.edit', params: { taskId: task.id } }"
             >
               <button class="btn btn-success">Edit</button>
             </router-link>
           </td>
           <td>
-            <button class="btn btn-danger" v-on:click="deleteTask(task.id)">
+            <button class="btn btn-danger" @click="deleteTask(task.id)">
               Delete
             </button>
           </td>
@@ -41,16 +41,13 @@
           <td>{{ sub_task.due }}</td>
           <td>
             <router-link
-              v-bind:to="{ name: 'sub_task.edit', params: { taskId: task.id, subTaskId: sub_task.id } }"
+              :to="{ name: 'task.edit', params: { subTaskId: sub_task.id } }"
             >
               <button class="btn btn-success">Edit</button>
             </router-link>
           </td>
           <td>
-            <button
-              class="btn btn-danger"
-              v-on:click="deleteSubTask(sub_task.id)"
-            >
+            <button class="btn btn-danger" @click="deleteSubTask(sub_task.id)">
               Delete
             </button>
           </td>
@@ -61,45 +58,26 @@
 </template>
 
 <script>
+import { taskMethods } from "../mixins/taskMethods";
 export default {
+  mixins: [taskMethods],
   props: {
     taskId: {
       type: Number,
       require: true,
     },
   },
-  data () {
+  data() {
     return {
       task: [],
       sub_tasks: [],
-      componentKey: 0,
     };
   },
-  methods: {
-    getTask() {
-      axios.get("/api/tasks/" + this.taskId).then((res) => {
-        this.task = res.data.data;
-      });
-    },
-    getSubTasks() {
-      axios.get("/api/tasks/" + this.taskId + "/sub_tasks").then((res) => {
-        this.sub_tasks = res.data;
-      });
-    },
-    deleteTask(id) {
-      axios.delete("/api/tasks/" + id).then((res) => {
-        this.$router.push({ name: "task.list" });
-      });
-    },
-    deleteSubTask(subTaskId) {
-      axios.delete("/api/sub_tasks/" + subTaskId).then((res) => {
-        this.getSubTasks()
-      });
-    },
-  },
-  mounted() {
-    this.getTask(),
-    this.getSubTasks();
+  methods: {},
+  created() {
+    console.log(this.taskId);
+    this.getTask(this.taskId);
+    this.getSubTasks(this.taskId);
   },
 };
 </script>

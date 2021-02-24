@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
       <div class="col-sm-6">
         <form v-on:submit.prevent="submit" v-if="subTask[0]">
           <div class="form-group row">
@@ -34,43 +34,43 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    subTaskId: {
-      type: Number,
-      require: true,
-    },
-    taskId: {
-      type: Number,
-      require: true,
-    },
-  },
-  data: function () {
-    return {
-      subTask: {},
-    };
-  },
-  methods: {
-    getSubTask() {
-      axios.get("/api/sub_tasks/" + this.subTaskId).then((res) => {
-        this.subTask = res.data;
-      });
-    },
-    submit() {
-      axios
-        .put("/api/sub_tasks/" + this.subTaskId, this.subTask[0])
-        .then((res) => {
-          this.$router.push('/tasks/' + this.taskId, {params: {taskId: this.taskId}});
-        });
-    },
-  },
-  mounted() {
-    this.getSubTask();
-  },
-};
+// export default {
+//   props: {
+//     subTaskId: {
+//       type: Number,
+//       require: true,
+//     },
+//     taskId: {
+//       type: Number,
+//       require: true,
+//     },
+//   },
+//   data: function () {
+//     return {
+//       subTask: {},
+//     };
+//   },
+//   methods: {
+//     getSubTask() {
+//       axios.get("/api/sub_tasks/" + this.subTaskId).then((res) => {
+//         this.subTask = res.data;
+//       });
+//     },
+//     submit() {
+//       axios
+//         .put("/api/sub_tasks/" + this.subTaskId, this.subTask[0])
+//         .then((res) => {
+//           this.$router.push('/tasks/' + this.taskId, {params: {taskId: this.taskId}});
+//         });
+//     },
+//   },
+//   mounted() {
+//     this.getSubTask();
+//   },
+// };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
       <div class="col-sm-6">
         <form v-on:submit.prevent="submit"  v-if="task">
           <div class="form-group row">
@@ -27,39 +27,39 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    taskId: {
-      type: Number,
-      require: true
-    },
-  },
-  data: function () {
-      return {
-          task: {}
-      }
-  },
-  methods: {
-      getTask() {
-          axios.get('/api/tasks/' + this.taskId)
-              .then((res) => {
-                  this.task = res.data.data;
-              });
-      },
-      submit() {
-          axios.put('/api/tasks/' + this.taskId, this.task)
-              .then((res) => {
-                  this.$router.push({name: 'task.list'})
-              });
-      }
-  },
-  mounted() {
-      this.getTask();
-  }
-};
+// export default {
+//   props: {
+//     taskId: {
+//       type: Number,
+//       require: true
+//     },
+//   },
+//   data: function () {
+//       return {
+//           task: {}
+//       }
+//   },
+//   methods: {
+//       getTask() {
+//           axios.get('/api/tasks/' + this.taskId)
+//               .then((res) => {
+//                   this.task = res.data.data;
+//               });
+//       },
+//       submit() {
+//           axios.put('/api/tasks/' + this.taskId, this.task)
+//               .then((res) => {
+//                   this.$router.push({name: 'task.list'})
+//               });
+//       }
+//   },
+//   mounted() {
+//       this.getTask();
+//   }
+// };
 </script>

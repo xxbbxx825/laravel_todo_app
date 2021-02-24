@@ -1,17 +1,15 @@
 require('./bootstrap');
-
 import Vue from 'vue';
-import store from './store';
-import router from './router.js'
-import HeaderComponent from "./components/layout/HeaderComponent";
+import store from './store/index';
+import router from './router';
+import axios from "axios";
+import App from './components/App';
 
-
-window.Vue = require('vue');
-window.state = store.state;
-
-Vue.component('header-component', HeaderComponent);
+Vue.config.productionTip = false;
+store.dispatch('autoLogin');
 
 new Vue({
-    router: router,
-    el: '#app',
-});
+  router: router,
+  store: store,
+  render: createElement => createElement(App),
+}).$mount('#app');
